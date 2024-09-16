@@ -5,59 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: psangunna <psanguna@student.42madrid>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 17:46:43 by psangunna         #+#    #+#             */
-/*   Updated: 2024/09/13 18:44:02 by psangunna        ###   ########.fr       */
+/*   Created: 2024/09/16 11:50:54 by psangunna         #+#    #+#             */
+/*   Updated: 2024/09/16 11:54:33 by psangunna        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-
 int	ft_valid_fractal(char *fractal)
 {
-	return (ft_strncmp(fractal, "mandelbrot", 10) == 0 || ft_strncmp(fractal, "julia", 5) == 0);
+	return (ft_strncmp(fractal, "mandelbrot", 10) == 0
+		|| ft_strncmp(fractal, "julia", 5) == 0);
 }
 
 void	ft_print_usage(void)
 {
 	ft_putendl_fd("Usage: ./fractol <fractal>", 1);
-	ft_putendl_fd("Available fractals: mandelbrot | julia real_part imag_part", 1);
+	ft_putendl_fd("Available fractals: mandelbrot | julia rel_part img_part",
+		1);
 }
 
 void	ft_update_view(t_data *data)
 {
-	double width = data->xmax - data->xmin;
-	double height = data->ymax - data->ymin;
-	// Ajusta el rango basado en el nivel de zoom
-	data->xmin += data->offset_x * width;
-	data->xmax = data->xmin + width / data->zoom;
-	data->ymin += data->offset_y * height;
-	data->ymax = data->ymin + height / data->zoom;
+	data->width = data->xmax - data->xmin;
+	data->height = data->ymax - data->ymin;
+	data->xmin += data->offset_x * data->width;
+	data->xmax = data->xmin + data->width / data->zoom;
+	data->ymin += data->offset_y * data->height;
+	data->ymax = data->ymin + data->height / data->zoom;
 }
 
-double	ft_generate_random_c(void)
+static const char	*ft_skip_whitespace_and_sign(const char *str, int *sign)
 {
-	return (((double)rand() / RAND_MAX) * 3.0 - 1.5);
+	*sign = 1;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			*sign = -1;
+		str++;
+	}
+	return (str);
 }
 
 double	ft_atof(const char *str)
 {
 	double	result;
 	double	divisor;
-	int		sign = 1;
+	int		sign;
 
 	result = 0.0;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '-')
-	{
-		sign = -1;
-		str++;
-	}
-	else if (*str == '+')
-	{
-		str++;
-	}
+	divisor = 10.0;
+	str = ft_skip_whitespace_and_sign(str, &sign);
 	result = ft_atoi(str);
 	while (ft_isdigit(*str))
 		str++;

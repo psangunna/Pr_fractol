@@ -6,7 +6,7 @@
 #    By: psangunna <psanguna@student.42madrid>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/13 18:57:24 by psangunna         #+#    #+#              #
-#    Updated: 2024/09/13 18:57:27 by psangunna        ###   ########.fr        #
+#    Updated: 2024/09/16 12:20:49 by psangunna        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Werror -Wall -Wextra -fsanitize=address
 RM = rm -rf
 
 # Define source files
-SRC = main.c utils.c events.c colors.c sets.c # Asegúrate de agregar todos los archivos fuente necesarios
+SRC = fractol.c utils.c events.c colors.c build_julia.c build_mandelbrot.c
 
 # Define object files
 OBJ = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: psangunna <psanguna@student.42madrid>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 18:04:42 by psangunna         #+#    #+#             */
-/*   Updated: 2024/09/13 18:13:39 by pamela           ###   ########.fr       */
+/*   Updated: 2024/09/16 11:47:54 by pamela           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	ft_key_press(int keycode, t_data *data)
 {
-	if (keycode == 65307)// Código para tecla ESC
+	if (keycode == 65307)
 	{
 		ft_close_program(data);
 		exit(1);
 	}
-	else if (keycode == 106)//J
+	else if (keycode == 106)
 	{
 		ft_set_random_julia(&data->c.re, &data->c.im);
 		ft_render_fractal(data);
@@ -32,29 +32,23 @@ void	ft_zoom(t_data *data, int zoom_in, int mouse_x, int mouse_y)
 	double	zoom_factor;
 	double	re_factor;
 	double	im_factor;
-	double	width;
-	double	height;
 	double	mouse_re;
 	double	mouse_im;
 
-	if (zoom_in) //up --aumenta
-		zoom_factor = 1.0 / 1.42; 
+	if (zoom_in)
+		zoom_factor = 1.0 / 1.42;
 	else
 		zoom_factor = 1.42;
-	// Rango visible en el plano complejo
-	width = data->xmax - data->xmin;
-	height = data->ymax - data->ymin;
-	// Coordenadas del punto donde se hizo clic con el ratón en el plano complejo
-	mouse_re = data->xmin + (mouse_x / (double)WIDTH) * width;
-	mouse_im = data->ymin + (mouse_y / (double)HEIGHT) * height;
-	// Actualizar las coordenadas mínimas y máximas en el plano complejo, centradas en el punto del ratón
+	data->width = data->xmax - data->xmin;
+	data->height = data->ymax - data->ymin;
+	mouse_re = data->xmin + (mouse_x / (double)WIDTH) * data->width;
+	mouse_im = data->ymin + (mouse_y / (double)HEIGHT) * data->height;
 	re_factor = mouse_re - data->xmin;
 	im_factor = mouse_im - data->ymin;
 	data->xmin = mouse_re - re_factor * zoom_factor;
-	data->xmax = mouse_re + (width - re_factor) * zoom_factor;
+	data->xmax = mouse_re + (data->width - re_factor) * zoom_factor;
 	data->ymin = mouse_im - im_factor * zoom_factor;
-	data->ymax = mouse_im + (height - im_factor) * zoom_factor;
-	// Ahora actualizamos el renderizado con el nuevo rango
+	data->ymax = mouse_im + (data->height - im_factor) * zoom_factor;
 	ft_render_fractal(data);
 }
 
@@ -80,10 +74,8 @@ void	ft_close_program(t_data *data)
 		mlx_destroy_window(data->mlx, data->win);
 	if (data->img)
 		mlx_destroy_image(data->mlx, data->img);
-	#ifdef __linux__
+	if (data->mlx)
 		mlx_destroy_display(data->mlx);
-	#endif
-	// Liberar la conexión de mlx
 	if (data->mlx)
 		free(data->mlx);
 	exit(0);
