@@ -100,14 +100,12 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	if (!ft_handle_input(&data, argc, argv))
+		return (1);
 	if (!ft_init_data(&data))
 		return (1);
-	if (!ft_handle_input(&data, argc, argv))
-	{
-		ft_close_program(&data);
-		return (1);
-	}
 	ft_render_fractal(&data);
+	ft_print_available_commands();
 	ft_setup_hooks(&data);
 	mlx_loop(data.mlx);
 	return (0);

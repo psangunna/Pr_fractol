@@ -14,7 +14,7 @@
 # define FRACTOL_H
 
 # include "libft/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "minilibx_linux/mlx.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
@@ -58,7 +58,7 @@ typedef struct s_data
 void	ft_render_fractal(t_data *data);
 void	ft_draw_mandelbrot(t_data *data);
 void	ft_draw_julia(t_data *data);
-int		ft_key_press(int keycode, t_data *data);
+int		ft_key_press(int key, t_data *data);
 int		ft_close_window(t_data *data);
 void	ft_close_program(t_data *data);
 void	ft_print_usage(void);
@@ -70,5 +70,6 @@ void	ft_set_random_julia(double *cx, double *cy);
 double	ft_atof(const char *str);
 int		ft_mouse_hook(int button, int x, int y, t_data *data);
 void	ft_set_julia_params(t_data *data, int argc, char **argv);
+void	ft_print_available_commands(void);
 
 #endif

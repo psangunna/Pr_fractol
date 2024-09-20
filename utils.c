@@ -18,13 +18,6 @@ int	ft_valid_fractal(char *fractal)
 		|| ft_strncmp(fractal, "julia", 5) == 0);
 }
 
-void	ft_print_usage(void)
-{
-	ft_putendl_fd("Usage: ./fractol <fractal>", 1);
-	ft_putendl_fd("Available fractals: mandelbrot | julia rel_part img_part",
-		1);
-}
-
 void	ft_update_view(t_data *data)
 {
 	data->width = data->xmax - data->xmin;
@@ -35,7 +28,7 @@ void	ft_update_view(t_data *data)
 	data->ymax = data->ymin + data->height / data->zoom;
 }
 
-static const char	*ft_skip_whitespace_and_sign(const char *str, int *sign)
+static const char	*ft_del_whitespace_and_sign(const char *str, int *sign)
 {
 	*sign = 1;
 	while ((*str >= 9 && *str <= 13) || *str == 32)
@@ -57,7 +50,7 @@ double	ft_atof(const char *str)
 
 	result = 0.0;
 	divisor = 10.0;
-	str = ft_skip_whitespace_and_sign(str, &sign);
+	str = ft_del_whitespace_and_sign(str, &sign);
 	result = ft_atoi(str);
 	while (ft_isdigit(*str))
 		str++;

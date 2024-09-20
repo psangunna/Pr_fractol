@@ -6,20 +6,20 @@
 /*   By: psangunna <psanguna@student.42madrid>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 18:04:42 by psangunna         #+#    #+#             */
-/*   Updated: 2024/09/16 11:47:54 by pamela           ###   ########.fr       */
+/*   Updated: 2024/09/20 12:25:30 by psangunna        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	ft_key_press(int keycode, t_data *data)
+int	ft_key_press(int key, t_data *data)
 {
-	if (keycode == 65307)
+	if (key == 65307)
 	{
 		ft_close_program(data);
 		exit(1);
 	}
-	else if (keycode == 106)
+	else if (key == 106)
 	{
 		ft_set_random_julia(&data->c.re, &data->c.im);
 		ft_render_fractal(data);
